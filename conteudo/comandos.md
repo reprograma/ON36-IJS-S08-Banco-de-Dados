@@ -354,7 +354,7 @@ Exclui linhas específicas de uma tabela.
 ## COUNT
 Mostra o valor total de linhas que retornam de uma busca.
 
-**Obs**.: Quando usamos o nome de uma coluna para contagem, fique atendo pois ele desconsidera os valores nules daquela coluna.
+**Obs**.: Quando usamos o nome de uma coluna para contagem, fique atendo pois ele desconsidera os valores nulos daquela coluna.
 
 - Sintaxe:
 
@@ -439,7 +439,7 @@ Arredonda valores.
 
 ## JOIN
 
-Junta ou agreaga dados de diferentes tabelas em um único resultado.
+Junta ou agrega dados de diferentes tabelas em um único resultado.
 
 - Sintaxe:
 

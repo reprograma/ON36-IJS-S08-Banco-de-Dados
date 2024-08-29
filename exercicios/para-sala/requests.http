@@ -1,0 +1,141 @@
+### GET Hello World
+
+GET http://localhost:3000
+
+### USER Routes
+
+### POST Create User
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Monica Craveiro",
+  "email": "monica@email.com"
+}
+
+### GET Find All Users
+
+GET http://localhost:3000/users
+
+### GET Find User by ID
+
+GET http://localhost:3000/users/3d02bb15-0646-4a8c-91d1-13985a874f0a
+
+### PUT Update User
+
+PUT http://localhost:3000/users/1e0dcf3e-1847-46c9-b602-4926e5c31c22
+Content-Type: application/json
+
+{
+  "name": "Monica Craveiro de Menezes",
+  "email": "monica@email.com.br"
+}
+
+### DELETE Delete User by ID
+
+DELETE http://localhost:3000/users/1e0dcf3e-1847-46c9-b602-4926e5c31c22
+
+### PROFILE Routes
+
+### POST Create Profile
+
+POST http://localhost:3000/profiles
+Content-Type: application/json
+
+{
+  "minibio": "essa é a minibio",
+  "avatar": "avatar",
+  "userId": "1e0dcf3e-1847-46c9-b602-4926e5c31c22"
+}
+
+### GET Find All Profiles
+
+GET http://localhost:3000/profiles
+
+### GET Find Profile by ID
+
+GET http://localhost:3000/profiles/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+
+### PUT Update Profile
+
+PUT http://localhost:3000/profiles/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+Content-Type: application/json
+
+{
+  "minibio": "essa é a minibio atualizada",
+  "avatar": "novo avatar",
+  "userId": "0f69b40f-f5a9-4e6f-8a12-d80c90e97d41"
+}
+
+### DELETE Delete Profile
+
+DELETE http://localhost:3000/profiles/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+
+### TASK Routes
+
+### POST Create Task
+
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "esse é o titulo",
+  "userId": "0f69b40f-f5a9-4e6f-8a12-d80c90e97d41"
+}
+
+### GET Find All Tasks
+
+GET http://localhost:3000/tasks/
+
+### GET Find Task by ID
+
+GET http://localhost:3000/tasks/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+
+### PUT Update Task
+
+PUT http://localhost:3000/tasks/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+Content-Type: application/json
+
+{
+  "title": "esse é o titulo atualizado",
+  "userId": "0f69b40f-f5a9-4e6f-8a12-d80c90e97d41"
+}
+
+### DELETE Delete Task
+
+DELETE http://localhost:3000/tasks/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+
+### TAG Routes
+
+### POST Create Tag
+
+POST http://localhost:3000/tags
+Content-Type: application/json
+
+{
+  "title": "esse é a tag",
+  "taskIds": ["0f69b40f-f5a9-4e6f-8a12-d80c90e97d41"]
+}
+
+### GET Find All Tags
+
+GET http://localhost:3000/tags/
+
+### GET Find Tag by ID
+
+GET http://localhost:3000/tags/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+
+### PUT Update Tag
+
+PUT http://localhost:3000/tags/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
+Content-Type: application/json
+
+{
+  "title": "esse é a tag atualizado",
+  "userId": "0f69b40f-f5a9-4e6f-8a12-d80c90e97d41"
+}
+
+### DELETE Delete Tag
+
+DELETE http://localhost:3000/tags/0f69b40f-f5a9-4e6f-8a12-d80c90e97d41
