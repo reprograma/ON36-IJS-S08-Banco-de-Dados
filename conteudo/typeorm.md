@@ -1,8 +1,8 @@
 # O que é TypeORM?
 
-O TypeORM usa o paradigma Orientado `Objetos para se comunicar com o Banco de Dados.
+O TypeORM usa o paradigma Orientado à Objetos para se comunicar com o Banco de Dados.
 
-Ele é escrito e TypeScript e foi projetado paraser usad com Node.JS.
+Ele é escrito e TypeScript e foi projetado paraser usado com Node.JS.
 
 O TypeORM suporta os principais bancos de dados, incluindo MySQL, PostgreSQL, MariaDB, SQLite, e até mesmo Microsoft SQL Server.
 

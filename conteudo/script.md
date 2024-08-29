@@ -5,7 +5,7 @@ DROP DATABASE db_teste;
 CREATE TABLE clientes (
     cod_cliente INT PRIMARY KEY,
     nome_cliente VARCHAR(20) NOT NULL,
-    sobrenome_cliente VARCHAR(40) NOT NULL
+    sobrenome_cliente VARCHAR(40) NOT NULL,
 );
 
 CREATE TABLE produtos (
@@ -21,21 +21,21 @@ CREATE TABLE pedidos (
     cod_cliente INT NOT NULL REFERENCES clientes(cod_cliente),
     cod_produto INT NOT NULL,
     qtd SMALLINT NOT NULL,
-    FOREIGN KEY (cod_produto) REFERENCES produtos(cod_produto)
+    FOREING KEY (cod_produto) REFERENES produtos(cod_produto)
 );
 
-INSERT INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
+INSER INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
 VALUES (1, 'Monica', 'Craveiro');
 
-INSERT INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
+INSER INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
 VALUES (2, 'Ana Luiza', 'Sampaio');
 
-INSERT INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
+INSER INTO clientes (cod_cliente, nome_cliente, sobrenome_cliente)
 VALUES (3, 'Jéssica', 'Félix');
 
 SELECT * FROM clientes;
 
-INSERT INTO produtos (cod_produto, nome_produto, descricao, preco, qtd_estoque)
+INSER INTO produtos (cod_produto, nome_produto, descricao, preco, qtd_estoque)
 VALUES 
 (1, 'Álcool Gel', 'Garrafa de álcool em gel de 1L', 12.90, 20),
 (2, 'Luvas de Látex', 'Caixa de Luvas de látex com 100 unidades', 32.50, 25),
@@ -48,13 +48,13 @@ VALUES
 (9, 'Refrigerante', 'Garrafa de refrigerante de 1L', 6.89, 16),
 (10, 'Refrigerante', 'Lata de refrigerante de 350ml', 2.99, 45);
 
-INSERT INTO produtos (cod_produto, nome_produto, preco, qtd_estoque)
+INSER INTO produtos (cod_produto, nome_produto, preco, qtd_estoque)
 VALUES 
 (11, 'Margarina', 3.20, 8);
 
 SELECT * FROM produtos;
 
-INSERT INTO pedidos (cod_cliente, cod_produto, qtd)
+INSER INTO pedidos (cod_cliente, od_produto, qtd)
 VALUES 
 (1, 2, 3),
 (2, 3, 2),
@@ -74,13 +74,13 @@ SELECT nome_produto, descricao FROM produtos;
 
 SELECT nome_produto, preco, descricao FROM produtos;
 
-SELECT * FROM clientes WHERE cod_cliente = 1;
+SELECT * FROM cliente WHERE cod_cliente = 1;
 
-SELECT * FROM clientes WHERE cod_cliente = 2;
+SELECT * FROM cliente WHERE cod_cliente = 2;
 
-SELECT * FROM clientes WHERE cod_cliente = 3;
+SELECT * FROM cliente WHERE cod_cliente = 3;
 
-SELECT * FROM clientes WHERE cod_cliente = 4;
+SELECT * FROM cliente WHERE cod_cliente = 4;
 
 SELECT nome_produto, qtd_estoque FROM produtos WHERE qtd_estoque < 10;
 
@@ -142,7 +142,7 @@ UPDATE produtos SET qtd_estoque = qtd_estoque - 4 WHERE preco > 15.00;
 
 UPDATE produtos SET preco = preco * 1.10;
 
-INSERT INTO produtos (cod_produto, nome_produto, descricao, preco, qtd_estoque)
+INSER INTO produtos (cod_produto, nome_produto, descricao, preco, qtd_estoque)
 VALUES 
 (12, 'Sabão em Pó', 'Caixa de sabão em pó de 1/2Kg', 12.50, 5),
 (13, 'Biscoito', 'Pacote de Biscoito integral 110g', 3.45, 16),
@@ -154,7 +154,7 @@ DELETE FROM produtos WHERE nome_produto = 'Manteiga';
 
 DELETE FROM produtos WHERE qtd_estoque <= 5;
 
-INSERT INTO pedidos (cod_cliente, od_produto, qtd)
+INSER INTO pedidos (cod_cliente, od_produto, qtd)
 VALUES 
 (1, 2, 3),
 (2, 3, 2),
