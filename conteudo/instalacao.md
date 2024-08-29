@@ -40,10 +40,6 @@ export class AppModule {}
 
 ```
   import { DataSource } from 'typeorm';
-  import { User } from './src/user/entities/user.entity';
-  import { Profile } from './src/profile/entities/profile.entity';
-  import { Task } from './src/task/entities/task.entity';
-  import { Tag } from './src/tag/entities/tag.entity';
 
   export const AppDataSource = new DataSource({
     type: 'postgres',

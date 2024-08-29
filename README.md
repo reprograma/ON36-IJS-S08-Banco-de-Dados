@@ -44,6 +44,7 @@ O que veremos durante a semana?
 - **TypeORM**
     - [O que é TypeORM?](/conteudo/typeorm.md)
     - [Passos para Instalação no Projeto](/conteudo/instalacao.md)
+    - [Principais Funções](/conteudo/funcoes.md)
 
 - **Modelagem de Dados**
     - [Introdução à Modelagem de Dados](/conteudo/intromodelagem.md)
