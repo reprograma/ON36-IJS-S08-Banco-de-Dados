@@ -12,14 +12,6 @@ Carioca, Bacharel em Sistemas de Informação e Matemática, Desenvolvedora Back
 
 @mocraveirodev - em todas as redes sociais
 
-### Instruções
-
-Antes de começar, vamos organizar nosso setup.
-* Fork esse repositório 
-* Clone o fork na sua máquina (Para isso basta abrir o seu terminal e digitar `git clone url-do-seu-repositorio-forkado`)
-* Entre na pasta do seu repositório (Para isso basta abrir o seu terminal e digitar `cd nome-do-seu-repositorio-forkado`)
-* [Add outras intrucoes caso necessario]
-
 ### Objetivo
 
 - **Gerais**
@@ -51,33 +43,14 @@ O que veremos durante a semana?
 
 - **TypeORM**
     - [O que é TypeORM?](/conteudo/typeorm.md)
-    - [Comandos](/conteudo/comandostypeorm.md)
+    - [Passos para Instalação no Projeto](/conteudo/instalacao.md)
 
 - **Modelagem de Dados**
     - [Introdução à Modelagem de Dados](/conteudo/intromodelagem.md)
-    - [Visão de Negócio](/conteudo/visaonegocio.md)
-    - [Papel das Desenvolvedoras](/conteudo/papel.md)
-    - [Processos e Metodologias Colaborativas](/conteudo/processos.md)
-    - [Estudos de Caso e Exemplos Práticos](/conteudo/estudoscaso.md)
-    - [Ferramentas e Tecnologias de Suporte](/conteudo/ferramentas.md)
-    - [Tendências e Futuro da Modelagem de Dados](/conteudo/tendencias.md)
-    - [Importância da sinergia entre negócios e TI](/conteudo/importancia.md)
-    - [Fases da Modelagem de Dados](/conteudo/fases.md)
-    - [Técnicas de Modelagem de Dados](/conteudo/tecnicas.md)
-    - [Colaboração com Times de Negócios](/conteudo/colaboracao.md)
-    - [Ferramentas de Modelagem de Dados](/conteudo/ferramentas.md)
-    - [Implementação de Modelos de Dados](/conteudo/implementacao.md)
-    - [Manutenção e Atualização de Modelos de Dados](/conteudo/manutencao.md)
-    - [Boas Práticas na Modelagem de Dados](/conteudo/boaspraticas.md)
-
-- [Exercícios](#exercícios)
-- [Material da aula](#material-da-aula)
-- [Links Úteis](#links-úteis);
 
 ***
 ### Exercícios 
-* [Exercicio para sala](/exercicios/para-sala/)
-* [Exercicio para casa](/exercicios/para-casa/)
+* [Sisteminha com TypeORM implementado](/exercicios/para-sala/)
 
 ### Material da aula 
 * [Material](/material)
