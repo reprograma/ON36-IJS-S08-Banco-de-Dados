@@ -4,7 +4,7 @@ O TypeORM usa o paradigma Orientado à Objetos para se comunicar com o Banco de 
 
 Ele é escrito e TypeScript e foi projetado paraser usado com Node.JS.
 
-O TypeORM suporta os principais bancos de dados, incluindo MySQL, PostgreSQL, MariaDB, SQLite, e até mesmo Microsoft SQL Server.
+O TypeORM suporta os principais bancos de dados: **postgres, mysql, mariadb, postgres, cockroachdb, sqlite, mssql, oracle, sap, spanner, cordova, nativescript, react-native, expo, mongodb**
 
 Com TypeORM, você pode definir entidades e relacionamentos diretamente no seu código TypeScript, permitindo uma integração perfeita entre a lógica da aplicação e o banco de dados. Ele também oferece suporte a migrações de banco de dados, permitindo que você mantenha o esquema do banco de dados sincronizado com o código da sua aplicação.
 

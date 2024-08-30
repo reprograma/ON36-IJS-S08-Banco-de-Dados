@@ -18,16 +18,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'SEU_HOST_DO_BANCO',
-      port: 'PORTA_DO_BANCO',
-      username: 'USERNAME_DO_BANCO',
-      password: 'SENHA_DI_BANCO',
-      database: 'NOME DA BASE DE DADOS',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(AppDataSource.options),
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -42,15 +33,16 @@ export class AppModule {}
   import { DataSource } from 'typeorm';
 
   export const AppDataSource = new DataSource({
-    type: 'postgres',
+    type: 'postgres', // Tipo de banco, são aceitos: postgres, mysql, mariadb, postgres, cockroachdb, sqlite, mssql, oracle, sap, spanner, cordova, nativescript, react-native, expo, mongodb
     host: DB_HOST,
     port: DB_PORT,
     username: DB_USERNAME,
     password: DB_PASSWORD,
     database: 'DB_NAME,
-    entities: [LISTA_DE_ENTIDADES],
-    migrations: ['./src/migrations/*.ts'],
-    synchronize: true, //Não use em produção
+    entities: [LISTA_DE_ENTIDADES], // Lista com as entidades
+    migrations: ['./src/migrations/*.ts'], // Caminho das migrations
+    synchronize: true, // Não use em produção. Sincroniza suas entidades toda vez que  a aplicação sobe
+    logging: false, // Configuração de logs
   });
 ```
 ## Configuração na Arquitetura Hexagonal
@@ -60,6 +52,48 @@ export class AppModule {}
 **Entidades**: Defina suas entidades de domínio, que estarão na pasta domain.
 
 **Pasta**: src/domain/entities
+
+Possivelmente vocês já tem entidades criadas com um modelo parecido com o abaixo:
+```
+export class Photo {
+  id: number
+  name: string
+  description: string
+  filename: string
+  views: number
+  isPublished: boolean
+}
+```
+Nela já temos um breve modelo de como salvar os dados, por isso, precisamos modificá-la para que passa a ser espelho para a criação da tabela no Banco de dados.
+
+- **Criando Entidade**: Para isso, usaremos o decorator `@Entity` para informar ao TypeORM que aquele modelo será uma Tabela no Banco de Dados.
+- **Adicionando colunas**: Para isso usaremos o decorator `@Column`. Por padrão as strings são mapeadas como `varchar(255)`, números como `integer`, mas podemos personalizar os tipos passando por parametro.
+- **Adicionando chave primária**: Podemos usar o decorator `@PrimaryColumn` para isso. Caso queira que o campo seja auto incrementando, use o decorator `@PrimaryGeneratedColumn`
+
+```
+@Entity()
+export class Photo {
+    @PrimaryGeneratedColumn() // @PrimaryColumn
+    id: number
+
+    @Column({
+        length: 100,
+    })
+    name: string
+
+    @Column("text")
+    description: string
+
+    @Column()
+    filename: string
+
+    @Column("double")
+    views: number
+
+    @Column()
+    isPublished: boolean
+}
+```
 
 ### Camada de Aplicação
 
