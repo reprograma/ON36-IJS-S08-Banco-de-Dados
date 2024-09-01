@@ -5,7 +5,34 @@
 
 # Configuração do TypeORM
 
-**Sugestão**
+## Configuração do Data Source
+
+É por onde ocorre a conexão com o Banco de dados.
+
+- Criar o arquivo data-source.ts na raiz do projeto
+  - Configurar as options dentro do DataSource de acordo com a sua necessidade (vou listar abaixo as principais)
+
+```
+  import { DataSource } from 'typeorm';
+
+  export const AppDataSource = new DataSource({
+    type: 'postgres', // [OBRIGATÓRIO] Tipo de banco, são aceitos: "mysql", "postgres", "cockroachdb", "sap", "spanner", "mariadb", "sqlite", "cordova", "react-native", "nativescript", "sqljs", "oracle", "mssql", "mongodb", "aurora-mysql", "aurora-postgres", "expo", "better-sqlite3", "capacitor".
+    host: DB_HOST,
+    port: DB_PORT,
+    username: DB_USERNAME,
+    password: DB_PASSWORD,
+    database: 'DB_NAME,
+    entities: [LISTA_DE_ENTIDADES], // Lista com as entidades
+    migrations: ['./src/migrations/*.ts'], // Caminho das migrations
+    synchronize: true, // Não use em produção. Sincroniza suas entidades toda vez que  a aplicação sobe
+    logging: false, // Configuração de logs, se for true habilita logs de error e query. Se quiser outros tipos de log, descreva em um array ex.: "query", "error", "schema"].
+    logger: "advanced-console", // Configura qual logger que vai ser utilizado. Valores aceitos: "advanced-console", "simple-console" and "file".
+    maxQueryExecutionTime: 1000, // Se a execução da query estourar o tempo em milisegundos vai estourar uma exeption.
+    poolSize: 10, // Número máximo de conexãoes ativas no pool.
+    dropSchema: true, // Não use em produção. Dropa o schema cada vez que a aplicação é inicializada.
+    migrationsRun: true, // Inidca se a migrations vão rodar automaticamente cada vez que a aplicação subir. É uma alternativa ao comando migration:run
+  });
+```
 
 ### No arquivo app.module.ts
   - Importar Módulo do TypeORM e configurar a conexão (OPCIONAL - Configurar variáveis de ambiente no .env)
@@ -27,24 +54,6 @@ export class AppModule {}
 
 ```
 
-- Criar o arquivo data-source.ts na raiz do projeto
-
-```
-  import { DataSource } from 'typeorm';
-
-  export const AppDataSource = new DataSource({
-    type: 'postgres', // Tipo de banco, são aceitos: postgres, mysql, mariadb, postgres, cockroachdb, sqlite, mssql, oracle, sap, spanner, cordova, nativescript, react-native, expo, mongodb
-    host: DB_HOST,
-    port: DB_PORT,
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
-    database: 'DB_NAME,
-    entities: [LISTA_DE_ENTIDADES], // Lista com as entidades
-    migrations: ['./src/migrations/*.ts'], // Caminho das migrations
-    synchronize: true, // Não use em produção. Sincroniza suas entidades toda vez que  a aplicação sobe
-    logging: false, // Configuração de logs
-  });
-```
 ## Configuração na Arquitetura Hexagonal
 
 ### Camada de Domínio
