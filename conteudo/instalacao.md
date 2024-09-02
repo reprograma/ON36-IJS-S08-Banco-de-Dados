@@ -22,7 +22,7 @@
     username: DB_USERNAME,
     password: DB_PASSWORD,
     database: 'DB_NAME,
-    entities: [LISTA_DE_ENTIDADES], // Lista com as entidades
+    entities: ["entidade", "entity/*.js"], // Lista com as entidades
     migrations: ['./src/migrations/*.ts'], // Caminho das migrations
     synchronize: true, // Não use em produção. Sincroniza suas entidades toda vez que  a aplicação sobe
     logging: false, // Configuração de logs, se for true habilita logs de error e query. Se quiser outros tipos de log, descreva em um array ex.: "query", "error", "schema"].
@@ -58,7 +58,7 @@ export class AppModule {}
 
 ### Camada de Domínio
 
-**Entidades**: Defina suas entidades de domínio, que estarão na pasta domain.
+**Entidades**: Entidade é a classe que será mapeada para uma tabela do banco de dados, basicamente contem colunas e relacionamentos e obrigatoriamente tem que ter uma coluna de chave primária. Todas as entidades tem que ser registradas nas options do DataSource. Defina suas entidades que estarão na pasta domain.
 
 **Pasta**: src/domain/entities
 
@@ -75,25 +75,85 @@ export class Photo {
 ```
 Nela já temos um breve modelo de como salvar os dados, por isso, precisamos modificá-la para que passa a ser espelho para a criação da tabela no Banco de dados.
 
-- **Criando Entidade**: Para isso, usaremos o decorator `@Entity` para informar ao TypeORM que aquele modelo será uma Tabela no Banco de Dados.
-- **Adicionando colunas**: Para isso usaremos o decorator `@Column`. Por padrão as strings são mapeadas como `varchar(255)`, números como `integer`, mas podemos personalizar os tipos passando por parametro.
-- **Adicionando chave primária**: Podemos usar o decorator `@PrimaryColumn` para isso. Caso queira que o campo seja auto incrementando, use o decorator `@PrimaryGeneratedColumn`
+- **Criando Entidade**: Para isso, usaremos o decorator `@Entity` para informar ao TypeORM que aquele modelo será uma Tabela no Banco de Dados. Se quiser colocar um nome alternativo para a tabela, você pode especificá-lo como parêmetro no decorator: `@Entity("my_users")`.
+- **Adicionando colunas**: Para isso usaremos o decorator `@Column`, cada coluna marcada com esse decorator representará uma coluna da tabela. Por padrão as strings são mapeadas como `varchar(255)`, números como `integer`, mas podemos personalizar os ttipos passando por parametro.
+  - **Tipos especiais de colunas**: 
+    - `@CreateDateColumn`: automaticamente insere data de criação.
+    - `@UpdateDateColumn`: automaticamente insere data de upadate a cada vez que chamamos o `save` no repository.
+    - `@DeleteDateColumn`: automaticamente insere data cada vez que o `soft-delete` for chamado no repository.
+    - `@VersionColumn`: automaticamente insere a versão de uma entidade a cada vez que chamamos o `save` no repository.
+- **Adicionando chave primária**: Podemos usar o decorator `@PrimaryColumn` para isso, também pode especificar o tipo dela passando por parâmetro. Caso queira que o campo seja auto incrementando com um valor inteiro, use o decorator `@PrimaryGeneratedColumn`, se quiser que seja um valor gerado seja um uuid, passe "uuid" como arâmetro no decorator anterior.
+- **Tipos das colunas**: O TypeORM suporta todos os tipos comuns dos bancos de dados. Você pode especificar o tipo no primeiro parametro do decorator ou na propriedade `type`do options, que pode estar no primeiro ou segundo parametro dependendo se foi passado tipo ou não no primeiro.
+  - **Tipo enum**: Podem ser usados os tipos enum do typescript ou arrays
+```
+export enum UserRole {
+  ADMIN = "admin",
+  EDITOR = "editor",
+  GHOST = "ghost",
+}
+
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.GHOST,
+  })
+  role: UserRole
+}
+
+________________________________________________________________
+
+export type UserRoleType = "admin" | "editor" | "ghost",
+
+@Entity()
+export class User {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({
+        type: "enum",
+        enum: ["admin", "editor", "ghost"],
+        default: "ghost"
+    })
+    role: UserRoleType
+}
+```
+- **Options das colunas**: 
+  - `type`: tipo da coluna
+  - `name`: nome da coluna no banco. Por default, o nome é o da propriedade porém se tiver esse campo o calor será substituído pelo valor especificado aqui.
+  - `length`: tamanho do campo.
+  - `nullable`: booleano, faz a coluna ser `NULL` ou `NOT NULL` na tabela. Por default, seu valor é `false`.
+  - `update`: indica se a coluna vai ser aualizada no `save`. Por default, é `true`.
+  - `insert`: indica se a coluna vai ser definido na inserção do objeto. Por default, é `true`.
+  - `default`: indica um valor `default` para a coluna.
+  - `unique`: marca a coluna como unico.
+  - `charset`: define `charset` da coluna.
+  - `collation`: define `collation` da coluna.
+  - `enum`: usado para definir um valor de uma lista permitida de valores.
 
 ```
 @Entity()
 export class Photo {
-    @PrimaryGeneratedColumn() // @PrimaryColumn
+    @PrimaryGeneratedColumn("uuid") // @PrimaryGeneratedColumn() // @PrimaryColumn
     id: number
 
-    @Column({
+    @Column("text", {
         length: 100,
     })
     name: string
 
-    @Column("text")
+    @Column({
+      type: "text",
+      length: 100,
+    )
     description: string
 
-    @Column()
+    @Column("text")
     filename: string
 
     @Column("double")
