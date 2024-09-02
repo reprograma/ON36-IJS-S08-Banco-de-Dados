@@ -136,6 +136,7 @@ export class User {
   - `collation`: define `collation` da coluna.
   - `enum`: usado para definir um valor de uma lista permitida de valores.
 
+**Exemplo**:
 ```
 @Entity()
 export class Photo {
