@@ -164,6 +164,20 @@ export class Photo {
     isPublished: boolean
 }
 ```
+### Relacionamentos
+
+Os relacionamentos ajudam a tratar as relações entre as tabelas e tem vários tipos:
+  - 1:1 (um para um) usando o decorator `@OneToOne`
+  - N:1 (muitos para um) usando o decorator `@ManyToOne`
+  - 1:N (um para muitos) usando o decorator `@OneToMany`
+  - N:N (muitos para muitos) usando o decorator `@ManyToMany`
+
+Opções de relacionamentos:
+  - `eager`: boolean - Se for `true`, o relacionamento sempre será carregado com a entidade principal quando for usado o método `find` ou `QueryBuilder` nessa entidade.
+  - `cascade`: boolean | ("insert" | "update")[] - Se for `true`, o objeto relacionado será inserido ou atualizado no banco. Você também pode especificar um array de opções em cascata.
+  - `onDelete`: "RESTRICT"|"CASCADE"|"SET NULL" - Especifica como a chave estrangeira deve se comportar quando o objeto relacionado for deletado.
+  - `nullable`: boolean - Indica se o objeto relacionado pode ou não ser nulo.Por default ele pode ser nulo.
+orphanedRowAction: "nullify" | "delete" | "soft-delete" | disable - When a parent is saved (cascading enabled) without a child/children that still exists in database, this will control what shall happen to them. delete will remove these children from database. soft-delete will mark children as soft-deleted. nullify will remove the relation key. disable will keep the relation intact. To delete, one has to use their own repository.
 
 ### Camada de Aplicação
 
