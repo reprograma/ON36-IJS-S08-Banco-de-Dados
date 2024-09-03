@@ -174,10 +174,42 @@ Os relacionamentos ajudam a tratar as relações entre as tabelas e tem vários 
 
 Opções de relacionamentos:
   - `eager`: boolean - Se for `true`, o relacionamento sempre será carregado com a entidade principal quando for usado o método `find` ou `QueryBuilder` nessa entidade.
-  - `cascade`: boolean | ("insert" | "update")[] - Se for `true`, o objeto relacionado será inserido ou atualizado no banco. Você também pode especificar um array de opções em cascata.
+  - `cascade`: boolean | ("insert" | "update" | "remove" | "soft-remove" | "recover")[] - Se for `true`, o objeto relacionado será inserido ou atualizado no banco. Você também pode especificar um array de opções em cascata.
   - `onDelete`: "RESTRICT"|"CASCADE"|"SET NULL" - Especifica como a chave estrangeira deve se comportar quando o objeto relacionado for deletado.
   - `nullable`: boolean - Indica se o objeto relacionado pode ou não ser nulo.Por default ele pode ser nulo.
 orphanedRowAction: "nullify" | "delete" | "soft-delete" | disable - When a parent is saved (cascading enabled) without a child/children that still exists in database, this will control what shall happen to them. delete will remove these children from database. soft-delete will mark children as soft-deleted. nullify will remove the relation key. disable will keep the relation intact. To delete, one has to use their own repository.
+
+Opções do **@JoinColumn**
+
+Define qual lado da relação contém a coluna de junção com a chave estrangeira e também permite que você personlize o nome da coluna.
+
+Esse decorator é opcional para `@ManyToOne`mas é obrigatório para `@OneToOne`.
+
+```
+@ManyToOne(type => Category)
+@JoinColumn() || @JoinColumn({ name: "cat_id" })
+category: Category;
+```
+
+Opções do **@JoinTable**
+
+`@JoinTable` é usado para relacionamenos N:N e descreve as colunas da tabela "auxiliar". Uma tabela auxiliar é uma tabela separada especial criada automaticamente pelo TypeORM com colunas que se referem às entidades relacionadas. Você pode alterar nomes de colunas e suas referências com @JoinColumn: Você também pode alterar o nome da tabela "auxiliar" gerada.
+
+```
+@ManyToMany(type => Category)
+@JoinTable() || @JoinTable({
+    name: "question_categories", // Nome da tabela auxiliar desse relacionamento
+    joinColumn: {
+        name: "question",
+        referencedColumnName: "id"
+    },
+    inverseJoinColumn: {
+        name: "category",
+        referencedColumnName: "id"
+    }
+})
+categories: Category[];
+```
 
 ### Camada de Aplicação
 
