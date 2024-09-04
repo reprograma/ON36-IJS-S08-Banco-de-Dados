@@ -83,6 +83,7 @@ Nela já temos um breve modelo de como salvar os dados, por isso, precisamos mod
     - `@DeleteDateColumn`: automaticamente insere data cada vez que o `soft-delete` for chamado no repository.
     - `@VersionColumn`: automaticamente insere a versão de uma entidade a cada vez que chamamos o `save` no repository.
 - **Adicionando chave primária**: Podemos usar o decorator `@PrimaryColumn` para isso, também pode especificar o tipo dela passando por parâmetro. Caso queira que o campo seja auto incrementando com um valor inteiro, use o decorator `@PrimaryGeneratedColumn`, se quiser que seja um valor gerado seja um uuid, passe "uuid" como arâmetro no decorator anterior.
+- **Acicionando Índices**: Use o decorator `@Index` para criar um índice para o banco de dados.
 - **Tipos das colunas**: O TypeORM suporta todos os tipos comuns dos bancos de dados. Você pode especificar o tipo no primeiro parametro do decorator ou na propriedade `type`do options, que pode estar no primeiro ou segundo parametro dependendo se foi passado tipo ou não no primeiro.
   - **Tipo enum**: Podem ser usados os tipos enum do typescript ou arrays
 ```
