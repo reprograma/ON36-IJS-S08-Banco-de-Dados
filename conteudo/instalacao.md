@@ -231,7 +231,173 @@ categories: Category[];
 ## Importante 
 - Lembre-se de registrar os repositórios no módulo para correta injeção de dependência (**imports**, **providers** e **exports**)
 
-### Migrações
+## Funções de administração de BD
+
+### Find
+
+`find`, `findBy`, `findOne`, `findOneBy`
+
+```
+repository.find()
+
+repository.findBy({
+    firstName: "Timber",
+})
+
+repository.findOne({
+    where: {
+        firstName: "Timber",
+    },
+})
+
+repository.findOneBy({ firstName: "Timber" })
+
+```
+
+- Opções básicas (funcionam para todos os tipos de `find`)
+  - `select`: indica quais colunas devem retornar do banco.
+  ```
+  //SELECT "firstName", "lastName" FROM "user"
+
+  userRepository.find({
+    select: {
+      firstName: true,
+      lastName: true,
+    },
+  })
+  ```
+  - `relations`: relacionamentos que precisam ser carregados na busca.
+  ```
+  //SELECT * FROM "user"
+    LEFT JOIN "profile" ON "profile"."id" = "user"."profileId"
+    LEFT JOIN "photos" ON "photos"."id" = "user"."photoId"
+    LEFT JOIN "videos" ON "videos"."id" = "user"."videoId"
+
+  userRepository.find({
+    relations: {
+      profile: true,
+      photos: true,
+      videos: true,
+    },
+  })
+  ```
+  - `where`: condições de busca
+  ```
+  //SELECT * FROM "user"
+    WHERE "firstName" = 'Timber' AND "lastName" = 'Saw'
+
+  userRepository.find({
+    where: {
+      firstName: "Timber",
+      lastName: "Saw",
+    },
+  })
+  ```
+  - `order`: ordem da seleção
+  ```
+  //SELECT * FROM "user"
+  ORDER BY "name" ASC, "id" DESC
+
+  userRepository.find({
+    order: {
+      name: "ASC",
+      id: "DESC",
+    },
+  })
+  ```
+  - `skip`: O mesmo que o `offset`, dita a partir de onde a busca deve ser feita.
+  ```
+  //SELECT * FROM "user" OFFSET 5
+
+  userRepository.find({
+    skip: 5,
+  })
+  ```
+  - `take`: o mesmo que o `limit`, número máximo de resultados que a busca deve retornar.
+  ```
+  //SELECT * FROM "user" LIMIT 10
+
+  userRepository.find({
+    take: 10,
+  })
+  ```
+### Create
+
+Cria uma nova instância da entidade.
+```
+const user = repository.create({
+    id: 1,
+    firstName: "Timber",
+    lastName: "Saw",
+})
+```
+### Save
+Salva a entidade no banco de dados. Caso a entidade exista, será feito o update, senão será inserido um novo registro. Retorna a entidade salva.
+```
+await repository.save(user)
+```
+### Remove / Delete
+Remove a entidade do banco. Retorna a entidade removida.
+```
+await repository.remove(user)
+await repository.delete(1) // Remove pelo id
+```
+### Delete
+
+
+
+## Migrações
+
+É uma forma de sincronizar as alterações no domelo do banco de dados, se trata de um arquivo com querys em SQL para atualizar um esquema de banco de dados e aplicar novas alterações a um banco de dados existente.
+
+Isso requer o uso da [CLI do typeORM](https://typeorm.io/migrations#:~:text=Pr%C3%A9%2Drequisitos%20%3A-,Instalando%20CLI,-Antes%20de%20criar).
+
+ Precismos também adicionar a propriedade `migrations`às options do DataSource, pois dali que o TypeORM vai saber quais migrações devem ser carregadas.
+ ```
+ {
+  migrations: [/*...*/]
+ }
+ ```
+
+ A partir daí já pode criar as migrations através da CLI
+
+ `typeorm migration:create ./src/migrations/InitialMigration`
+
+
+ Após vai gerar um arquivo com o nome `{TIMESTAMP}-InitialMigration.ts `
+
+ Dentro dele, vai ter a classe de migração com 2 métodos: `up`e `down`.
+
+ - `up`: contém o código que vai gerar a migração.
+ - `down`: código que vai reverter a migração.
+
+ Denter deses métodos terá o `QueryRunner` que terá a query para o banco.
+
+ ```
+ import { MigrationInterface, QueryRunner } from "typeorm"
+
+export class InitialMigrationTIMESTAMP implements MigrationInterface {
+    async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(
+            `ALTER TABLE "post" RENAME COLUMN "title" TO "name"`,
+        )
+    }
+
+    async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(
+            `ALTER TABLE "post" RENAME COLUMN "name" TO "title"`,
+        )
+    }
+}
+```
+
+O comando `typeorm migration:generate ./src/migrations/InitialMigration -d ./data-source.ts` vai gerar as migrações automaticamente de acordo com os schemas que você criou.
+
+Para rodar as migraçes use o comando:  `typeorm migration:run -- -d path-to-datasource-config`.
+
+Esse comando irá rodar todas as migrações pendentes por ordem de criação, executando o métodos `up`deles.
+
+Para reverter as migrações, executando o métodos `down`deles, use o comando: `typeorm migration:revert -- -d path-to-datasource-config`.
 
 - Criar scripts no package.json
 
