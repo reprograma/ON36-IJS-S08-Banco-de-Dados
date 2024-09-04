@@ -167,10 +167,11 @@ export class Photo {
 ### Relacionamentos
 
 Os relacionamentos ajudam a tratar as relações entre as tabelas e tem vários tipos:
-  - 1:1 (um para um) usando o decorator `@OneToOne`
-  - N:1 (muitos para um) usando o decorator `@ManyToOne`
-  - 1:N (um para muitos) usando o decorator `@OneToMany`
-  - N:N (muitos para muitos) usando o decorator `@ManyToMany`
+  - 1:1 (um para um): Quando o relacionamento contém apenas uma única instância para cada lado. Adicionamos o decorator `@OneToOne` para especificarmos o tipo de relação de destino. Também adicionamos `@JoinColumn` que é obrigatório e deve ser definido apenas em um lado da relação — o lado que deve ter a chave estrangeira na tabela do banco de dados. Relações podem ser unidirecionais e bidirecionais. Unidirecionais são relações com um decorator de relação somente em um lado. Bidirecionais são relações com decorators em ambos os lados de uma relação.
+
+  - N:1 / 1:N  (muitos para um / um para muitos): Quando o relacionamento contém muitas instâncias de um lado da relação e apenas uma unica instancia do outro lado. Usam os decorators `@ManyToOne` / `@OneToMany` e um não existe sem o outro, ou seja, obrigatóriamente se temos um, temos que ter o outro. Podemos omitir o `@JoinColumn` nesse tipo de relação.
+
+  - N:N (muitos para muitos): Quando temos múltiplas instâncias de ambos os lados do relacionamento. Usa o decorator `@ManyToMany` e o `@JoinTable()` é obrigatório para esse tipo de relacionamento e você deve colocà-lo no lado proprietário da relação. Relações podem ser unidirecionais e bidirecionais. Unidirecionais são relações com um decorator de relação somente em um lado. Bidirecionais são relações com decorators em ambos os lados de uma relação.
 
 Opções de relacionamentos:
   - `eager`: boolean - Se for `true`, o relacionamento sempre será carregado com a entidade principal quando for usado o método `find` ou `QueryBuilder` nessa entidade.
